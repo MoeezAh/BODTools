@@ -74,3 +74,4 @@ NewFiles[1] = {'File': 'BODToolsFunc.py',      'Dest': '../../Scripts'}
 
 # Setup to 1 for enable this mod in Arena mode
 ModArenaMode = 0
+

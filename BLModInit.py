@@ -10,6 +10,7 @@ import GameText
 import BInput
 import Actions
 import BODToolsFunc
+import acts
 
 # Translations
 
@@ -19,22 +20,30 @@ import MenuText
 import BODToolsMenu
 
 if Language.Current == "Spanish":
-    MenuText.ForeingDict['Respawn  disabled'] = 'Respawn Activado'
-    MenuText.ForeingDict['Respawn  enabled'] = 'Respawn Desactivado'
+    MenuText.ForeingDict['Respawn  disabled'] = 'Respawn Activado' # type: ignore
+    MenuText.ForeingDict['Respawn  enabled'] = 'Respawn Desactivado' # type: ignore
 
-# import acts
-# acts.ConfigurableActions
+BODToolsFunc.debugprint("Adding input action")
 
-
-IManager = BInput.GetInputManager()
-OldInputActionsSet = IManager.GetInputActionsSet()
-IManager.SetInputActionsSet("Default")
+InputManager = BInput.GetInputManager()
+OldInputActionsSet = InputManager.GetInputActionsSet()
+InputManager.SetInputActionsSet("Default")
 
 Bladex.AddInputAction("LaunchTools", 0)
 Bladex.AddBoundFunc("LaunchTools", BODToolsFunc.LaunchTools)
 Bladex.AssocKey("LaunchTools", "Keyboard", "F12")
 
-IManager.SetInputActionsSet(OldInputActionsSet)
+InputManager.SetInputActionsSet(OldInputActionsSet)
+
+BODToolsFunc.debugprint("Added input action")
+
+BODToolsFunc.debugprint("Adding configureable actions")
+
+acts.ConfigurableActions.append(
+    ("Launch Tools", "LaunchTools", [])
+)
+
+BODToolsFunc.debugprint("Added configureable actions")
 
 global ModMenu
 ModMenu = BODToolsMenu.ModMenu
