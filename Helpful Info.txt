@@ -1,0 +1,38 @@
+
+< Option >
+{
+    "Name": MenuText.GetMenuText("Option 1:"),
+    "Kind": MenuWidget.B_MenuItemOption,
+    "Font": Menu.MenuFontBig,
+    "VSep": 10,
+    "Options": [MenuText.GetMenuText("Yes"), MenuText.GetMenuText("No")],
+    "Command": CmdWeaponCommand(text),
+    "Command2": CmdWeaponCommand(text, self),
+    "SelOptionFunc": CmdWeaponSelOption(),
+    "PostInitCommand": Func(self)
+}
+
+Number Spinner
+{
+    "Name": MenuText.GetMenuText("Option 2:"),
+    "Kind": MenuWidget.B_MenuSpin,
+    "Font": Menu.MenuFontBig,
+    "VSep": 10,
+    "Size": (300, 34),
+    "DefaultValue": 10,
+    "SpinValues": (0, 10, 5),
+    "SpinSetValueEnd": spinOnEnd(value),
+    "SpinOnChange": spinOnChange(value),
+}
+
+Text Spinner
+{
+    "Name": MenuText.GetMenuText("Option 3:"),
+    "Kind": BODWidget.B_MenuSpin,
+    "Font": Menu.MenuFontBig,
+    "VSep": 10,
+    "Size": (400, 19),
+    "SpinnerWidth": 200,
+    "Options": [MenuText.GetMenuText("Yes"), MenuText.GetMenuText("Maybe"), MenuText.GetMenuText("No"), MenuText.GetMenuText("Here is more text")],
+    "Command": test3,
+}

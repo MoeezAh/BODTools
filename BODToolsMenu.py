@@ -7,8 +7,20 @@ import MenuText
 
 ModMenu = [{
     "Name": MenuText.GetMenuText("BOD Tools"),
-    "VSep": 30,
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
     "Font": Menu.MenuFontBig,
-    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus
-}
-]
+    "VSep": 100,
+}, {
+    "Name": MenuText.GetMenuText("No configuration options defined."),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontMed,
+    "VSep": 20,
+}, {
+    "Name": MenuText.GetMenuText("BACK"),
+    "Font": Menu.MenuFontBig,
+    "VSep": Menu.BackOptionVSep,
+    "Command": Menu.BackMenu,
+}, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank,
+}]

@@ -67,7 +67,7 @@ ModAuthorInfo = "moeez.ahmad@outlook.com"
 
 NewFiles[0] = {"File": "BODToolsMenu.py",      "Dest": "../../Scripts"}
 NewFiles[1] = {'File': 'BODToolsFunc.py',      'Dest': '../../Scripts'}
-# NewFiles[2]      = {'File': '..\Arena1\Blade_progress.jpg',  'Dest': '..\MapName'}
+NewFiles[2] = {'File': "BODWidget.py",         "Dest": "../../Scripts"}
 
 # Replaced Files
 # RepFiles[1]    = {'File': 'Blade.exe',         'Dest': '..\..\bin'}

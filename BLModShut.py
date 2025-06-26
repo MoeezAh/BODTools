@@ -2,7 +2,7 @@ import Bladex
 import BODToolsFunc
 import BInput
 
-BODToolsFunc.debugprint("Start of ""RemoveInputAction()""")
+BODToolsFunc.debugprint("Start of BOD Tools shutdown.")
 
 InputManager = BInput.GetInputManager()
 OldInputActionSets = InputManager.GetInputActionsSet()
@@ -11,7 +11,7 @@ OldInputActionSets = InputManager.GetInputActionsSet()
 InputManager.SetInputActionsSet("Default")
 IActions = InputManager.GetInputActions()
 
-BODToolsFunc.debugprint("Found" + str(IActions.nElements()) + ".")
+BODToolsFunc.debugprint("Found " + str(IActions.nElements()) + ".")
 
 IAction = IActions.Find(BODToolsFunc.InputActionName)
 
@@ -26,4 +26,4 @@ if (Bladex.RemoveInputAction(BODToolsFunc.InputActionName)):
 InputManager.SetInputActionsSet(OldInputActionSets)
 
 # End of shutdown script
-BODToolsFunc.debugprint("End of ""RemoveInputAction()""")
+BODToolsFunc.debugprint("End of BOD Tools shutdown.")

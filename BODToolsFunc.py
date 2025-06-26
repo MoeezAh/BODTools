@@ -6,10 +6,20 @@ import Menu
 import MenuText
 import MenuWidget
 import netgame
+import types
+
+import BODWidget
+
+WeaponsList = []
+
+NotWeapon = [
+    "Cos", "Lich", "Spidersmall", "Little_Demon", "Salamander", "Great_Demon", "DarkLord", "Golem_stone", "Golem_clay", "Golem_lava", "Golem_metal", "Knight_N", "Barbarian_N", "Amazon_N", "Dwarf_N"
+]
 
 print_prefix = "BOD Tools: "
 InputActionName = "LaunchTools"
 LevelUpLabelText = None
+MenuVSep = 100, 20, 5
 
 BackOption = {
     "Name": MenuText.GetMenuText("BACK"),
@@ -21,6 +31,23 @@ BackOption = {
 
 def debugprint(msg):
     Reference.debugprint(print_prefix + msg)
+
+
+def GenWeaponsData():
+    global WeaponsList
+
+    for key in Reference.DefaultObjectData.keys():
+        if Reference.DefaultObjectData[key][0] == Reference.OBJ_WEAPON and (not key in NotWeapon):
+            if Reference.DefaultSelectionData.has_key(key):
+                DisplayName = Reference.DefaultSelectionData[key][2]
+            else:
+                DisplayName = key
+            WeaponsList.append(DisplayName)
+
+    WeaponsList.sort()
+
+    for i in range(len(WeaponsList)):
+        WeaponsList[i] = str(i + 1) + " - " + WeaponsList[i]
 
 
 def GiveExperiance(EntityName, Experience):
@@ -139,6 +166,7 @@ def HealPlayer():
 ## Menu Events ##
 #################
 
+
 def CmdHeal(parent):
     Bladex.AddScheduledFunc(
         Bladex.GetTime() + 0.5, HealPlayer, ())
@@ -167,108 +195,186 @@ def CmdLevelDown(parent):
     Menu.BackMenu(None)
     Menu.BackMenu(None)
 
+
+def CmdWeaponSelOption():
+    return 0
+
+
+def CmdWeaponCommandEx(OptionText, parent):
+    print(parent.SelOption)
+    print(parent.OptionText)
+
 ##########
 ## Menu ##
 ##########
 
 
-LifeMenu = {
+LifeMenu = [{
+    "Name": MenuText.GetMenuText("LIFE"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0]
+}, {
+    "Name": MenuText.GetMenuText("RESTORE HEALTH"),
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[1],
+    "Command": CmdHeal
+}, {
+    "Name": MenuText.GetMenuText("LEVEL UP"),
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[2],
+    "Command": CmdLevelUp
+}, {
+    "Name": MenuText.GetMenuText("LEVEL DOWN"),
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[2],
+    "Command": CmdLevelDown
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+WeaponsMenu = [{
+    "Name": MenuText.GetMenuText("WEAPONS"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0],
+}, {
+    "Name": MenuText.GetMenuText("Select Weapon"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[1],
+}, {
+    "Name": "",
+    "Kind": MenuWidget.B_MenuItemOption,
+    "Font": Menu.MenuFontBig,
+    "VSep": 2,
+    "Options": WeaponsList,
+    "Command2": CmdWeaponCommandEx,
+    "SelOptionFunc": CmdWeaponSelOption
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+ItemsMenu = [{
+    "Name": MenuText.GetMenuText("ITEMS"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0]
+}, {
+    "Name": MenuText.GetMenuText("No option defined."),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontSmall,
+    "VSep": MenuVSep[1],
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+CheatsMenu = [{
+    "Name": MenuText.GetMenuText("CHEATS"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0]
+}, {
+    "Name": MenuText.GetMenuText("No option defined."),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontSmall,
+    "VSep": MenuVSep[1],
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+MapMenu = [{
+    "Name": MenuText.GetMenuText("MAPS"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0]
+}, {
+    "Name": MenuText.GetMenuText("No option defined."),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontSmall,
+    "VSep": MenuVSep[1],
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+MiscMenu = [{
+    "Name": MenuText.GetMenuText("MISC"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0]
+}, {
+    "Name": MenuText.GetMenuText("No option defined."),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontSmall,
+    "VSep": MenuVSep[1],
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
+
+MainMenu = [{
+    "Name": MenuText.GetMenuText("BOD Tools"),
+    "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
+    "Font": Menu.MenuFontBig,
+    "VSep": MenuVSep[0],
+}, {
     "Name": MenuText.GetMenuText("LIFE"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 20,
+    "VSep": MenuVSep[1],
     "Size": (640, 480),
-    "ListDescr": [{
-        "Name": MenuText.GetMenuText("LIFE"),
-        "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
-        "Font": Menu.MenuFontBig,
-        "VSep": 100
-    }, {
-        "Name": MenuText.GetMenuText("RESTORE HEALTH"),
-        "Font": Menu.MenuFontBig,
-        "VSep": 20,
-        "Command": CmdHeal
-    }, {
-        "Name": MenuText.GetMenuText("LEVEL UP"),
-        "Font": Menu.MenuFontBig,
-        "VSep": 5,
-        "Command": CmdLevelUp
-    }, {
-        "Name": MenuText.GetMenuText("LEVEL DOWN"),
-        "Font": Menu.MenuFontBig,
-        "VSep": 5,
-        "Command": CmdLevelDown
-    }, BackOption, {
-        "Name": "Back",
-        "Kind": MenuWidget.B_BackBlank
-    }]
-}
-
-WeaponsMenu = {
+    "ListDescr": LifeMenu
+}, {
     "Name": MenuText.GetMenuText("WEAPONS"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 5,
+    "VSep": MenuVSep[2],
     "Size": (640, 480),
-    "ListDescr": []
-}
-
-ItemsMenu = {
+    "ListDescr": WeaponsMenu
+}, {
     "Name": MenuText.GetMenuText("ITEMS"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 5,
+    "VSep": MenuVSep[2],
     "Size": (640, 480),
-    "ListDescr": []
-}
-
-CheatsMenu = {
+    "ListDescr": ItemsMenu
+}, {
     "Name": MenuText.GetMenuText("CHEATS"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 5,
+    "VSep": MenuVSep[2],
     "Size": (640, 480),
-    "ListDescr": []
-}
-
-MapMenu = {
-    "Name": MenuText.GetMenuText("MAP"),
+    "ListDescr": CheatsMenu
+}, {
+    "Name": MenuText.GetMenuText("MAPS"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 5,
+    "VSep": MenuVSep[2],
     "Size": (640, 480),
-    "ListDescr": []
-}
-
-MiscMenu = {
+    "ListDescr": MapMenu
+}, {
     "Name": MenuText.GetMenuText("MISC"),
     "Kind": MenuWidget.B_MenuItemTextNoFX,
     "Font": Menu.MenuFontBig,
-    "VSep": 5,
+    "VSep": MenuVSep[2],
     "Size": (640, 480),
-    "ListDescr": []
-}
+    "ListDescr": MiscMenu,
+}, BackOption, {
+    "Name": "Back",
+    "Kind": MenuWidget.B_BackBlank
+}]
 
-Desc1 = {"Name": "TopMenu",
-         "Size": (640, 480),
-         "Kind": MenuWidget.B_MenuItemTextNoFX,
-         "ListDescr": [{
-             "Name": MenuText.GetMenuText("BOD Tools"),
-             "Kind": MenuWidget.B_MenuItemTextNoFXNoFocus,
-             "Font": Menu.MenuFontBig,
-             "VSep": 100
-         },
-             LifeMenu,
-             WeaponsMenu,
-             ItemsMenu,
-             CheatsMenu,
-             MapMenu,
-             BackOption,
-             {
-             "Name": "Back",
-             "Kind": MenuWidget.B_BackBlank
-         }]
-         }
+Desc1 = {
+    "Name": "TopMenu",
+    "Size": (640, 480),
+    "Kind": MenuWidget.B_MenuItemTextNoFX,
+    "ListDescr": MainMenu
+}
 
 ##########
 ##########
@@ -300,3 +406,6 @@ def LaunchTools():
 
     if AppMode == "Game":
         ExecToolsMenu()
+
+
+GenWeaponsData()
